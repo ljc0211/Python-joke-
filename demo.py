@@ -1,4 +1,4 @@
-import tkinter
+# import tkinter
 
 # 2018/3/5
 # array = ["gkd", "ahhhhh!", "www"]
@@ -100,6 +100,26 @@ import tkinter
 #
 
 # 2019.3.13
-win = tkinter.Tk()
-win.title('My first GUI Program')
-win.mainloop()#进入消息循环，即显示窗口.
+# win = tkinter.Tk()
+# win.title('My first GUI Program')
+# win.mainloop()#进入消息循环，即显示窗口.
+
+#2019.3.18
+#2019.3.20
+import sqlite3
+con = sqlite3.connect('test.db')
+print ("Opened database successfully")
+cur = con.cursor()
+
+# con.execute("create table book(id primary key, price, name)")
+# books=[("021",25,"大学计算机"),("022",30, "大学英语"),("023",18, "艺术欣赏 ") ,( "024",35, "高级语言程序设计")]
+# cur.executemany("insert into book(id,price,name) values (?,?,?) ",books)
+print("id   price   name")
+cur.execute("select id,price,name from book")
+for row in cur:
+    print(row)
+
+
+con.commit()
+cur.close()
+con.close()
