@@ -1,0 +1,31 @@
+import sqlite3
+def build_problems():
+    con = sqlite3.connect("problem.db")
+    cur = con.cursor()
+    problems = [("题目1", "A：我在说什么啊……", 'B', 'C', 'D', 'A'), ("题目2", 'A', "B：sqlite好像是成功了", 'C', 'D', 'B'), ("题目3", 'A', 'B', 'C', "D：可正确答案怎么匹配？", 'D'), ("题目4", 'A', 'B', "C：终于对上了。。", 'D', 'C')]
+    cur.execute("create table problems(id primary key, choice1, choice2, choice3, choice4, key)")
+    cur.executemany("insert into problems(id, choice1, choice2, choice3, choice4, key) values (?,?,?,?,?,?) ", problems)
+    con.commit()
+    cur.close()
+    con.close()
+def get_problems():
+    con = sqlite3.connect("problem.db")
+    cur = con.cursor()
+    cur.execute("select id, choice1, choice2, choice3, choice4 from problems")
+    values = cur.fetchall()
+    cur.execute("select key from problems")
+    keys = cur.fetchall()
+    cur.close()
+    con.close()
+    score = 0
+    i = 0
+    for value in values:
+        print(value)
+        choice = input()
+        if choice.__eq__(keys[i]):
+            score += 10
+        i += 1
+    print("你得了一共" + str(score) + "分！")
+
+build_problems()
+get_problems()
